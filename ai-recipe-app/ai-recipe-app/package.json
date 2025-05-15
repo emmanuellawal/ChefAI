@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "lucide-react": "^0.510.0",
+    "openai": "^4.98.0",
+    "uuid": "^11.1.0",
+    "zustand": "^5.0.4"
+  },
+  "devDependencies": {
+    "@types/uuid": "^10.0.0",
+    "eslint-config-prettier": "^10.1.5",
+    "prettier": "^3.5.3"
+  }
+}
