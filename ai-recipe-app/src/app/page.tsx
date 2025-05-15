@@ -1,103 +1,185 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import React, { useState } from 'react';
+import { TagInput } from '@/components/ui/TagInput';
+import { Button } from '@/components/ui/Button';
+import { Checkbox } from '@/components/ui/Checkbox';
+import { Input } from '@/components/ui/Input';
+import { Select } from '@/components/ui/Select';
+
+const commonDietaryRestrictions = [
+  { id: 'vegetarian', label: 'Vegetarian' },
+  { id: 'vegan', label: 'Vegan' },
+  { id: 'gluten-free', label: 'Gluten-Free' },
+  { id: 'dairy-free', label: 'Dairy-Free' },
+  { id: 'nut-free', label: 'Nut-Free' },
+  { id: 'low-carb', label: 'Low-Carb' },
+];
+
+const mealTypes = [
+  { value: '', label: 'Any Meal Type' },
+  { value: 'breakfast', label: 'Breakfast' },
+  { value: 'lunch', label: 'Lunch' },
+  { value: 'dinner', label: 'Dinner' },
+  { value: 'snack', label: 'Snack' },
+  { value: 'dessert', label: 'Dessert' },
+];
+
+export default function HomePage() {
+  const [ingredients, setIngredients] = useState<string[]>([]);
+  const [selectedDietaryRestrictions, setSelectedDietaryRestrictions] = useState<string[]>([]);
+  const [otherDietaryRestriction, setOtherDietaryRestriction] = useState<string>('');
+  const [cuisinePreferences, setCuisinePreferences] = useState<string[]>([]);
+  const [numberOfServings, setNumberOfServings] = useState<number>(2);
+  const [mealType, setMealType] = useState<string>('');
+
+  const handleDietaryRestrictionChange = (restrictionId: string, checked: boolean) => {
+    setSelectedDietaryRestrictions(prev => 
+      checked ? [...prev, restrictionId] : prev.filter(item => item !== restrictionId)
+    );
+  };
+
+  const handleGenerateRecipe = () => {
+    const allDietaryRestrictions = [...selectedDietaryRestrictions];
+    if (otherDietaryRestriction.trim()) {
+      allDietaryRestrictions.push(otherDietaryRestriction.trim());
+    }
+    console.log('Generating recipe with:', {
+      ingredients,
+      dietaryRestrictions: allDietaryRestrictions,
+      cuisinePreferences,
+      servings: numberOfServings,
+      mealType,
+    });
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="w-full max-w-2xl mx-auto py-8">
+      <h1 className="text-4xl font-bold text-center mb-10">
+        What are your preferences?
+      </h1>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleGenerateRecipe();
+        }}
+        className="space-y-8"
+      >
+        <section>
+          <label htmlFor="ingredients-input" className="block text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
+            Available Ingredients
+          </label>
+          <TagInput
+            id="ingredients-input"
+            tags={ingredients}
+            setTags={setIngredients}
+            placeholder="Type an ingredient and press Enter or comma..."
+          />
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1.5">
+            Add the ingredients you have on hand.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
+            Dietary Restrictions
+          </h2>
+          <div className="space-y-2 mb-3">
+            {commonDietaryRestrictions.map(restriction => (
+              <Checkbox
+                key={restriction.id}
+                id={`diet-${restriction.id}`}
+                label={restriction.label}
+                checked={selectedDietaryRestrictions.includes(restriction.id)}
+                onCheckedChange={(checked) => 
+                  handleDietaryRestrictionChange(restriction.id, typeof checked === 'boolean' ? checked : false)
+                }
+              />
+            ))}
+          </div>
+          <div>
+            <label htmlFor="other-dietary-restriction" className="sr-only">
+              Other dietary restriction
+            </label>
+            <Input 
+              type="text"
+              id="other-dietary-restriction"
+              placeholder="Other (e.g., soy-free, low-fodmap)"
+              value={otherDietaryRestriction}
+              onChange={(e) => setOtherDietaryRestriction(e.target.value)}
+              className="w-full sm:w-2/3"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          </div>
+           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1.5">
+            Select any dietary needs or add your own.
+          </p>
+        </section>
+
+        <section>
+          <label htmlFor="cuisine-input" className="block text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
+            Cuisine Preferences
+          </label>
+          <TagInput
+            id="cuisine-input"
+            tags={cuisinePreferences}
+            setTags={setCuisinePreferences}
+            placeholder="e.g., Italian, Mexican, Thai..."
+          />
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1.5">
+            List any cuisines you prefer.
+          </p>
+        </section>
+
+        <section>
+          <label htmlFor="servings-input" className="block text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
+            Number of Servings
+          </label>
+          <Input
+            id="servings-input"
+            type="number"
+            min="1"
+            value={numberOfServings}
+            onChange={(e) => setNumberOfServings(parseInt(e.target.value, 10) || 1)}
+            className="w-24"
+          />
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1.5">
+            How many people are you cooking for?
+          </p>
+        </section>
+
+        <section>
+          <label htmlFor="meal-type-select" className="block text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">
+            Meal Type
+          </label>
+          <Select
+            id="meal-type-select"
+            value={mealType}
+            onChange={(e) => setMealType(e.target.value)}
+            className="w-full sm:w-2/3"
           >
-            Read our docs
-          </a>
+            {mealTypes.map(type => (
+              <option key={type.value} value={type.value} >
+                {type.label}
+              </option>
+            ))}
+          </Select>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1.5">
+            Optionally, specify a meal type.
+          </p>
+        </section>
+
+        <div className="pt-4">
+          <Button 
+            type="submit" 
+            size="lg" 
+            className="w-full"
+            disabled={ingredients.length === 0} 
+          >
+            Generate Recipe
+          </Button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </form>
     </div>
   );
 }
