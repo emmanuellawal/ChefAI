@@ -1,108 +1,160 @@
 # ChefAI - AI Recipe Recommender & Modifier
 
-A Next.js application that suggests and modifies recipes based on user-provided ingredients and preferences, powered by AI.
+ChefAI is an intelligent recipe recommendation and modification application that leverages artificial intelligence to help users create delicious meals based on available ingredients and dietary preferences. The app provides personalized recipe suggestions, allows for recipe modifications, and can even generate appetizing images of the dishes.
 
 ## Features
 
-*(Placeholder: To be filled in as features are developed)*
+- **AI-Powered Recipe Generation**: Get personalized recipe suggestions based on your ingredients
+- **Smart Recipe Modification**: Adapt recipes to your dietary restrictions and preferences
+- **Ingredient-Based Search**: Find recipes using ingredients you have on hand
+- **Dietary Restriction Filtering**: Filter recipes by various dietary needs (vegan, gluten-free, etc.)
+- **Recipe Image Generation**: AI-generated visuals for recipes
+- **User Authentication**: Save and manage your favorite recipes
+- **Responsive Design**: Beautiful, modern UI that works on all devices
 
-- Ingredient-based recipe generation
-- Dietary restriction and cuisine preference filtering
-- AI-powered recipe modification
-- Saving favorite recipes (Local Storage / Cloud)
-- AI-generated recipe images
+## Technologies Used
 
-## Tech Stack
+### Frontend
+- **Next.js 14.1.0**: React framework for production-grade applications
+- **React 18.2.0**: UI component library
+- **TypeScript**: For type-safe code
+- **Tailwind CSS 3.3.0**: Utility-first CSS framework
+- **Lucide React**: Modern icon library
+- **Zustand**: Lightweight state management
 
-- Next.js (React framework)
-- TypeScript
-- Tailwind CSS
-- OpenAI API (or similar for AI)
-- Zustand (for state management, optional)
-- Vercel (for deployment)
+### Backend & APIs
+- **Firebase 10.12.2**: Authentication and data storage
+  - Authentication
+  - Firestore database
+  - Cloud storage
+- **OpenAI API**: For recipe generation and modification
+  - GPT-4 for recipe text generation
+  - DALL-E 3 for recipe image generation
+- **Stability AI API**: Alternative image generation service
 
-## Project Structure
-
-*(Placeholder: Brief overview of the main directories, can be detailed later)*
-
-- `src/app/`: Next.js App Router, pages and layouts
-- `src/components/`: Reusable UI components
-- `src/lib/`: Helper functions, AI clients, utility services
-- `src/hooks/`: Custom React hooks
-- `src/store/`: Global state management (if used)
-- `src/types/`: TypeScript definitions
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v18.x or later recommended)
-- npm or yarn
-
-### Environment Variables
-
-Create a `.env.local` file in the root of the `ai-recipe-app` directory by copying the example file:
-
-```bash
-cp .env.local.example .env.local
-```
-
-Then, populate `.env.local` with your API keys and other environment-specific settings:
-
-```env
-OPENAI_API_KEY="YOUR_OPENAI_API_KEY_HERE"
-NEXT_PUBLIC_APP_NAME="ChefAI"
-# Add other variables as needed
-```
-
-**Note:** The `OPENAI_API_KEY` is required for AI features to work. The `NEXT_PUBLIC_APP_NAME` is used as the application display name.
-
-### Installation
-
-1.  Clone the repository (if applicable, or navigate to the project directory if already set up).
-2.  Navigate to the application directory:
-    ```bash
-    cd ai-recipe-app
-    ```
-3.  Install dependencies:
-    ```bash
-    npm install
-    # or
-    # yarn install
-    ```
-
-### Running the Development Server
-
-```bash
-npm run dev
-# or
-# yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Available Scripts
-
-In the project directory, you can run:
-
-- `npm run dev`: Runs the app in development mode.
-- `npm run build`: Builds the app for production.
-- `npm run start`: Starts the production server.
-- `npm run lint`: Lints the code using ESLint.
-- `npm run format`: Formats the code using Prettier.
+### Development Tools
+- **ESLint & Prettier**: Code quality and formatting
+- **PostCSS**: CSS processing and optimization
+- **Critters**: CSS optimization for production builds
 
 ## AI Integration
 
-*(Placeholder: Details about the AI model, prompt engineering, and how it interacts with the app.)*
+ChefAI uses multiple AI models to provide a comprehensive recipe experience:
 
-## Deployment
+1. **Recipe Generation (OpenAI GPT-4)**
+   - Generates detailed recipes based on user inputs
+   - Considers dietary restrictions and preferences
+   - Provides step-by-step cooking instructions
+   - Suggests ingredient substitutions
 
-*(Placeholder: Instructions or link to deployed application on Vercel/other platform.)*
+2. **Image Generation (DALL-E 3 / Stability AI)**
+   - Creates appetizing images of recipes
+   - Generates visuals for recipe steps
+   - Provides multiple style options for food photography
 
-## Contributing
+3. **Natural Language Processing**
+   - Understands user queries and preferences
+   - Processes ingredient lists and cooking instructions
+   - Handles recipe modification requests
 
-*(Placeholder: Guidelines for contributing to the project, if open for contributions.)*
+## Setup Instructions
+
+### Prerequisites
+- Node.js (v18.x or later)
+- npm or yarn
+- Git
+
+### Environment Setup
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd ai-recipe-app
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Create a `.env.local` file in the project root with the following variables:
+   ```env
+   # Application
+   NEXT_PUBLIC_APP_NAME=ChefAI
+
+   # OpenAI Configuration
+   OPENAI_API_KEY=your_openai_api_key_here
+
+   # Stability AI Configuration
+   STABILITY_AI_API_KEY=your_stability_ai_key_here
+   NEXT_PUBLIC_STABILITY_API_HOST=https://api.stability.ai
+
+   # Firebase Configuration
+   NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+   NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+   ```
+
+### Running the Application
+
+1. Development mode:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+2. Production build:
+   ```bash
+   npm run build
+   npm start
+   # or
+   yarn build
+   yarn start
+   ```
+
+### Available Scripts
+- `npm run dev`: Start development server
+- `npm run build`: Create production build
+- `npm start`: Run production server
+- `npm run lint`: Run ESLint
+- `npm run format`: Format code with Prettier
+
+## Future Improvements
+
+1. **Enhanced AI Features**
+   - Recipe video generation
+   - Voice-guided cooking instructions
+   - Nutritional analysis and recommendations
+   - Smart meal planning
+
+2. **User Experience**
+   - Collaborative recipe sharing
+   - Social features and community
+   - Recipe collections and organization
+   - Shopping list generation
+
+3. **Technical Enhancements**
+   - Progressive Web App (PWA) support
+   - Offline functionality
+   - Real-time recipe collaboration
+   - Advanced search and filtering
+
+4. **Integration & Expansion**
+   - Integration with smart kitchen devices
+   - Grocery delivery services
+   - Multiple language support
+   - Recipe scaling and conversion
 
 ## License
 
-*(Placeholder: Specify project license, e.g., MIT.)*
+MIT License - See [LICENSE](LICENSE) for details.
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on how to submit pull requests, report issues, and contribute to the project.
