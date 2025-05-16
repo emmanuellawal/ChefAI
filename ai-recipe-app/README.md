@@ -81,23 +81,25 @@ ChefAI uses multiple AI models to provide a comprehensive recipe experience:
 3. Create a `.env.local` file in the project root with the following variables:
    ```env
    # Application
-   NEXT_PUBLIC_APP_NAME=ChefAI
+   NEXT_PUBLIC_APP_NAME="ChefAI"
 
    # OpenAI Configuration
-   OPENAI_API_KEY=your_openai_api_key_here
+   OPENAI_API_KEY="<your-openai-api-key>"
 
    # Stability AI Configuration
-   STABILITY_AI_API_KEY=your_stability_ai_key_here
-   NEXT_PUBLIC_STABILITY_API_HOST=https://api.stability.ai
+   STABILITY_AI_API_KEY="<your-stability-ai-key>"
+   NEXT_PUBLIC_STABILITY_API_HOST="https://api.stability.ai"
 
    # Firebase Configuration
-   NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
-   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-   NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+   NEXT_PUBLIC_FIREBASE_API_KEY="<your-firebase-api-key>"
+   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="<your-project>.firebaseapp.com"
+   NEXT_PUBLIC_FIREBASE_PROJECT_ID="<your-project-id>"
+   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="<your-project-id>.appspot.com"
+   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="<your-sender-id>"
+   NEXT_PUBLIC_FIREBASE_APP_ID="<your-app-id>"
    ```
+
+   > **Important**: Never commit your actual API keys or sensitive credentials. Always use environment variables and keep your `.env.local` file in `.gitignore`.
 
 ### Running the Application
 
